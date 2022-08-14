@@ -2,6 +2,7 @@
 
 ### Requirements: requests and bs4
 
-** You need fill NEED_COUNTRY (If dont set - no filters, SLEEP - timing to sleep, XF_TOKEN - You XF TOKEN, PAGES - maximum pages for parsing, CATEGORY - catgory to parse) **
-
+* You need fill NEED_COUNTRY (If dont set - no filters, SLEEP - timing to sleep, XF_TOKEN - You XF TOKEN, PAGES - maximum pages for parsing, CATEGORY - catgory to parse) *
 fill it in main
+
+**** FILL COOKIES!!! https://curlconverter.com/python from this website ****
