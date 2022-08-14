@@ -1,4 +1,4 @@
-## RUN CMD: python main
+## RUN CMD: `python main`
 
 ### Requirements: requests and bs4
 
