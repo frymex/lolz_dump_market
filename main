@@ -1,0 +1,50 @@
+import time
+
+import requests, bs4
+
+NEED_COUNTRY = ''
+SLEEP = 2
+XF_TOKEN = ''
+PAGES = 500
+CATEGORY = 'telegram'
+
+cookies = {
+    "cookies": 'from https://curlconverter.com/python'
+}
+
+headers = {
+    'authority': 'lolz.guru',
+    'accept': '*/*',
+    'accept-language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+    'dnt': '1',
+    'sec-ch-ua': '"Chromium";v="104", " Not A;Brand";v="99", "Google Chrome";v="104"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+    'x-requested-with': 'XMLHttpRequest',
+}
+
+
+for x in range(1, PAGES):
+    time.sleep(SLEEP)
+    response = requests.get(
+        f'https://lolz.guru/market/{CATEGORY}/?page={str(x)}&_xfResponseType=json&_xfToken={XF_TOKEN}',
+        cookies=cookies, headers=headers).json()
+    soup = bs4.BeautifulSoup(response['templateHtml'], 'html.parser')
+
+    all_ = soup.find_all('li', class_='marketIndexItem PopupItemLink')
+    for item in all_:
+        price = item.find('span', class_='Value').get('data-value')
+        item_url = item.find('a', class_='marketIndexItem--Title PopupItemLink').get('href')
+        country = item.find_all('div', class_='marketIndexItem-Badge')[0].contents[0].replace('\n', '').replace('\t',
+                                                                                                                '')
+        if not NEED_COUNTRY:
+            print(f'Цена: {price}', f'Ссылка: {item_url}', f'Страна: {country}')
+        else:
+            if country == NEED_COUNTRY:
+                print(f'Цена: {price}', f'Ссылка: {item_url}', f'Страна: {country}')
+
+        # print(all_badges)
